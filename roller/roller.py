@@ -1,22 +1,10 @@
-import sys
-
-__author__ = 'SAM'
-
-
-def has_valid_semicolon(line):
-    """This checks a passed line to ensure it has proper semicolon usage"""
-    if '{' in line or '}' in line:
-        return True
-    else:
-        return line.endswith(';')
-
-
-linenum = 0
-with open(sys.argv[1], 'r') as myfile:
-    for file_line in myfile:
-        linenum += 1
-        file_line = file_line.rstrip()
-        if not file_line:
-            continue
-        if not has_valid_semicolon(file_line):
-            print "%d. Statement should end with a semicolon" % linenum
+import sys, re
+line_num = 0
+file_line = ""
+with open(sys.argv[1], 'r') as lintee:
+    for file_line in lintee:
+        line_num += 1
+        if re.match("\s*$", file_line): continue
+        if re.match(".*[ \t]$", file_line): print("%d. Statement should not have trailing whitespace." % line_num)
+        if not re.match(".+[\{\};][\s]*$", file_line): print("%d. Statement should end with a semicolon." % line_num)
+    if not re.match(".*\n$", file_line): print("%d. File %s should end with a newline character." % (line_num, sys.argv[1]))
