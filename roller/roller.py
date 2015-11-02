@@ -1,6 +1,7 @@
 import sys
 import re
 
+# Main file for linter.
 line_num = 0
 file_line = ""
 with open(sys.argv[1], 'r') as lintee:
