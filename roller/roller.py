@@ -6,7 +6,7 @@ file_line = ""
 with open(sys.argv[1], 'r') as lintee:
     for file_line in lintee:
         line_num += 1
-        if re.match("\s*$", file_line):
+        if re.match("\s*$", file_line) or re.match("//.*", file_line):
             continue
         if re.search("[ \t]$", file_line):
             print("%d. Statement should not have trailing whitespace." % line_num)
